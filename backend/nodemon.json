@@ -1,5 +1,6 @@
 {
     "env": {
-        "SECRETKEY": "somesupersecretsecret"
+        "SECRETKEY": "somesupersecretsecret",
+        "COKIEPASSWORD": "cookiesPasswordAdministration"
     }
 }
