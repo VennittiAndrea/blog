@@ -86,6 +86,15 @@ const adminJS = new AdminJS({
     },
   ],
   rootPath: "/admin",
+  dashboard: {
+    handler: async () => {
+      return { some: 'output' }
+    },
+    component: AdminJS.bundle('./components/dashboard')
+  },
+  // dashboard: {
+  //   component: AdminJS.bundle('./components/dashboard')
+  // },
   branding: {
     companyName: "Administration",
     softwareBrothers: false,

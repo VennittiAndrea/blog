@@ -20,6 +20,9 @@ const articleSchema = new Schema(
       type: String,
       required: true
     },
+    profilePhotoLocation: {
+      type: String,
+    },
     tag: [
       {
       type: Schema.Types.ObjectId,

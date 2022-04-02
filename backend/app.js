@@ -113,6 +113,8 @@ app.use(
 app.use(adminJS.options.rootPath, router);
 //app.use(adminJS.options.loginPath, router);
 
+app.use('/uploads', express.static('uploads'));
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -123,7 +125,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb://localhost:27017/PersonalSite', { useNewUrlParser: true }
+    'mongodb://localhost:27017/PersonalSite', { useNewUrlParser: true, useUnifiedTopology: true, }
   )
   .then(result => {
     app.listen(8080, () => console.log(`Example app listening on port 8080!`));
