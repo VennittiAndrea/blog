@@ -1,25 +1,33 @@
 /**
  * @summary Creation of Administration section
- * @description Folder related to the administration options. 
+ * @description Folder related to the administration options.
  * With content creation, user management and RBAC (Role-Base Access Control)
  * @author Andrea Vennitti
- * 
+ *
  * @package AdminJS: automatic administration
  * @package AdminJS/express: connection of adminJS to Express
  * @package bcrypt: password encryption
- * 
+ *
  * @param [ User, Article, Tag, Topic ] models of mongoose collections
  * @param [ userResource, userActions, articleResource, articleActions, tagResource, topicResource ]
  * options of AdminJS: customization
- * 
+ *
  */
 
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
 const bcrypt = require("bcrypt");
+const uploadFeature = require("@adminjs/upload");
 
-const { User, Article, Tag, Topic } = require('../models');
-const { userResource, userActions, articleResource, articleActions, tagResource, topicResource } = require('./resources');
+const { User, Article, Tag, Topic } = require("../models");
+const {
+  userResource,
+  userActions,
+  articleResource,
+  articleActions,
+  tagResource,
+  topicResource,
+} = require("./resources");
 //const authenticate = require('./util');
 
 // We have to tell AdminJS that we will manage mongoose resources with it
@@ -39,7 +47,7 @@ const sidebarGroups = {
 //Typical structure of the AdminJS object.
 /**
  * @param resource Mongoose model: collection
- * @param options properties (data to be shown and how), parent (structure of the UI), 
+ * @param options properties (data to be shown and how), parent (structure of the UI),
  * actions (before, RBAC, after) (creation, deletion, modification)
  * Other options can be added:
  * head: for inserting links and SEO
@@ -71,6 +79,24 @@ const adminJS = new AdminJS({
         parent: sidebarGroups.article,
         actions: articleActions,
       },
+      features: [
+        uploadFeature({
+          provider: { local: { bucket: "public" } },
+          multiple: true,
+          properties: {
+            file: "images.file",
+            filePath: "images.path",
+            filename: "images.filename",
+            filesToDelete: "images.toDelete",
+            key: "images.key",
+            mimeType: "images.mimeType",
+            bucket: "images.bucket",
+          },
+          validation: {
+            mimeType: ["image/png", "image/jpg"],
+          },
+        }),
+      ],
     },
     {
       resource: Tag,
@@ -88,17 +114,14 @@ const adminJS = new AdminJS({
   rootPath: "/admin",
   dashboard: {
     handler: async () => {
-      return { some: 'output' }
+      return { some: "output" };
     },
-    component: AdminJS.bundle('./components/dashboard')
+    component: AdminJS.bundle("./components/dashboard"),
   },
-  // dashboard: {
-  //   component: AdminJS.bundle('./components/dashboard')
-  // },
   branding: {
     companyName: "Administration",
     softwareBrothers: false,
-    logo: 'https://images-platform.99static.com//lPRxXpwQRJ8TILncLSFWBoE6b34=/295x281:1680x1667/fit-in/500x500/99designs-contests-attachments/108/108066/attachment_108066965',
+    logo: "https://images-platform.99static.com//lPRxXpwQRJ8TILncLSFWBoE6b34=/295x281:1680x1667/fit-in/500x500/99designs-contests-attachments/108/108066/attachment_108066965",
   },
 });
 

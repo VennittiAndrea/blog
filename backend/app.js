@@ -110,10 +110,10 @@ app.use(
 );
 */
 
+app.use('/uploads', express.static('uploads'));
+
 app.use(adminJS.options.rootPath, router);
 //app.use(adminJS.options.loginPath, router);
-
-app.use('/uploads', express.static('uploads'));
 
 app.use((error, req, res, next) => {
   console.log(error);

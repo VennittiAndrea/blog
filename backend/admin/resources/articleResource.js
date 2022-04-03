@@ -15,12 +15,15 @@ const articleResource = {
       },
     },
   },
-  uploadImage: {
-    components: {
-      edit: AdminJS.bundle("../components/upload-image.edit.tsx"),
-      list: AdminJS.bundle("../components/upload-image.list.tsx"),
-    },
+  images: {
+    isVisible: false,
   },
+  slug: {
+    isVisible: false,
+  },
+  sanitizedHtml: {
+    isVisible: false,
+  }
 };
 
 module.exports = articleResource;

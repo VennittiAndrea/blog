@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const marked = require('marked')
+const slugify = require('slugify')
+const createDomPurify = require('dompurify')
+const { JSDOM } = require('jsdom')
+const dompurify = createDomPurify(new JSDOM().window) 
 
 const articleSchema = new Schema(
   {
@@ -20,9 +25,6 @@ const articleSchema = new Schema(
       type: String,
       required: true
     },
-    profilePhotoLocation: {
-      type: String,
-    },
     tag: [
       {
       type: Schema.Types.ObjectId,
@@ -36,19 +38,30 @@ const articleSchema = new Schema(
       required: true
     },
     slug: {
-      type: String,
-      required: true
+      type: String
     },
     content: {
       type: String,
       required: true
     },
-    markcontent: {
+    sanitizedHtml: {
       type: String,
-      required: true
     },
+    images: {
+      type: Object, 
+    }
   
   }
 );
+
+articleSchema.pre('validate', function(next) {
+  if (this.title) {
+    this.slug = slugify(this.title, { lower: true, strict: true })
+  }
+  if (this.content) {
+    this.sanitizedHtml = dompurify.sanitize(marked.parse(this.content))
+  }
+  next()
+})
 
 module.exports = mongoose.model('Article', articleSchema);

@@ -1,7 +1,3 @@
-const {
-  after: articleAfterHook,
-  before: articleBeforeHook,
-} = require('./article.hook');
 
 //Restricted access: RBAC function
 const canEditArticles = ({ currentAdmin, record }) => {
@@ -19,11 +15,18 @@ const elementAction = {
   delete: { isAccessible: canEditArticles },
   new: {
     before: async (request, context) => {
-      return await articleBeforeHook(request, context);
+      console.log(context)
+      console.log(request)
+      if (request.method === "post") {
+        //insert the currentAdmin
+        request.payload = {
+          ...request.payload,
+          ownerId: context.currentAdmin._id,
+        };
+        return request;
+      }
+      return request;
     },
-    after: async (response, request, context) => {
-      return await articleAfterHook(response, request, context);
-    }
   }
 }
 
