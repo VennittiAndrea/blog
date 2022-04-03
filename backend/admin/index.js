@@ -78,6 +78,16 @@ const adminJS = new AdminJS({
         properties: articleResource,
         parent: sidebarGroups.article,
         actions: articleActions,
+        locale: {
+          language: 'en',
+          translations: {
+            Article: {
+              properties: {
+                public: 'Do you want to publish it?',
+              }
+            }
+          }
+        },
       },
       features: [
         uploadFeature({

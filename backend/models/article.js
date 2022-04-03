@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const marked = require('marked')
-const slugify = require('slugify')
-const createDomPurify = require('dompurify')
-const { JSDOM } = require('jsdom')
-const dompurify = createDomPurify(new JSDOM().window) 
+const slugify = require('slugify');
+
+// const marked = require('marked');
+// const createDomPurify = require('dompurify');
+// const { JSDOM } = require('jsdom');
+// const dompurify = createDomPurify(new JSDOM().window);
 
 const articleSchema = new Schema(
   {
@@ -21,9 +22,11 @@ const articleSchema = new Schema(
       type: String, 
       required: true
     },
-    imageUrl: {
+    fileLocation: {
       type: String,
-      required: true
+    },
+    imageLocation: {
+      type: String,
     },
     tag: [
       {
@@ -38,19 +41,14 @@ const articleSchema = new Schema(
       required: true
     },
     slug: {
-      type: String
-    },
-    content: {
       type: String,
-      required: true
     },
     sanitizedHtml: {
       type: String,
     },
-    images: {
-      type: Object, 
+    published: {
+      type: Boolean,
     }
-  
   }
 );
 
@@ -58,9 +56,9 @@ articleSchema.pre('validate', function(next) {
   if (this.title) {
     this.slug = slugify(this.title, { lower: true, strict: true })
   }
-  if (this.content) {
-    this.sanitizedHtml = dompurify.sanitize(marked.parse(this.content))
-  }
+  // if (this.content) {
+  //   this.sanitizedHtml = dompurify.sanitize(marked.parse(this.content))
+  // }
   next()
 })
 

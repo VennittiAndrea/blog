@@ -4,26 +4,36 @@ const AdminJS = require('adminjs');
 //direi che mi conviene andarle a mettere su mongodb
 const articleResource = {
   ownerId: { isVisible: { edit: false, show: true, list: true, filter: true } },
-  content: {
-    type: "richtext",
-    custom: {
-      modules: {
-        toolbar: [
-          ["bold", "italic"],
-          ["link", "image"],
-        ],
-      },
+  // content: {
+  //   type: "richtext",
+  //   custom: {
+  //     modules: {
+  //       toolbar: [
+  //         ["bold", "italic"],
+  //         ["link", "image"],
+  //       ],
+  //     },
+  //   },
+  // },
+  uploadFile: {
+    required: true,
+    components: {
+      edit: AdminJS.bundle("../components/upload-file.edit.tsx"),
+      list: AdminJS.bundle("../components/upload-file.list.tsx"),
     },
   },
-  images: {
-    isVisible: false,
+  uploadImage: {
+    required: true,
+    components: {
+      edit: AdminJS.bundle("../components/upload-image.edit.tsx"),
+      list: AdminJS.bundle("../components/upload-image.list.tsx"),
+    },
   },
-  slug: {
-    isVisible: false,
-  },
-  sanitizedHtml: {
-    isVisible: false,
-  }
+  sanitizedHtml: {isVisible: false,},
+  slug: {isVisible: false,},
+  fileLocation: {isVisible: false,},
+  imageLocation: {isVisible: false,},
+  ownerId: { isVisible: { edit: true, show: true, list: true, filter: true } },
 };
 
 module.exports = articleResource;
