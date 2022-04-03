@@ -5,7 +5,16 @@ const fs = require('fs');
 /** @type {AdminJS.After<AdminJS.ActionResponse>} */
 const after = async (response, request, context) => {
   //image management
-  const { record, uploadImage } = context;
+  const { record, uploadFile, uploadImage } = context;
+
+  if (record.isValid() && uploadFile) {
+    const filePath = path.join('uploads', record.id().toString(), uploadFile.name);
+    await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+
+    await fs.promises.rename(uploadFile.path, filePath);
+
+    await record.update({ fileLocation: `/${filePath}` });
+  }
 
   if (record.isValid() && uploadImage) {
     const filePath = path.join('uploads', record.id().toString(), uploadImage.name);
@@ -13,8 +22,9 @@ const after = async (response, request, context) => {
 
     await fs.promises.rename(uploadImage.path, filePath);
 
-    await record.update({ profilePhotoLocation: `/${filePath}` });
+    await record.update({ imageLocation: `/${filePath}` });
   }
+
   return response;
 };
 
@@ -28,9 +38,10 @@ const before = async (request, context) => {
     };
 
     //image management
-    const { uploadImage, ...otherParams } = request.payload;
+    const { uploadFile, uploadImage, ...otherParams } = request.payload;
 
     // eslint-disable-next-line no-param-reassign
+    context.uploadFile = uploadFile;
     context.uploadImage = uploadImage;
 
     return {

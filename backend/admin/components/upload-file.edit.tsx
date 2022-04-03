@@ -9,15 +9,15 @@ const Edit: React.FC<BasePropertyProps> = (props) => {
     onChange(property.name, files[0])
   }
 
-  const uploadedImage = record.params.imageLocation
-  const imageToUpload = record.params[property.name]
+  const uploadedFile = record.params.fileLocation
+  const fileToUpload = record.params[property.name]
 
   return (
     <Box marginBottom="xxl">
       <Label>{property.label}</Label>
-      <DropZone validate={{mimeTypes: ['image/png', 'image/jpg']}} onChange={handleDropZoneChange}/>
-      {uploadedImage && !imageToUpload && (
-        <DropZoneItem src={uploadedImage} />
+      <DropZone validate={{mimeTypes: ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip']}} onChange={handleDropZoneChange}/>
+      {uploadedFile && !fileToUpload && (
+        <DropZoneItem src={uploadedFile} />
       )}
     </Box>
   )
