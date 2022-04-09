@@ -7,13 +7,12 @@ const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
 //required for admin page: adminJS
 
-//const graphqlSchema = require('./graphql/schema');
-//const graphqlResolver = require('./graphql/resolvers');
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
 //const auth = require('./middleware/auth');
 //Devo mettere la parte per gestire le immagini che passo -> Devo vedere nel frontend come lo richiama
 //const { clearImage } = require('./util/file');
 //Required for admin page
-//const {adminJS, router} = require('./administration');
 const {adminJS, router} = require('./admin');
 
 
@@ -90,7 +89,7 @@ app.put('/post-image', (req, res, next) => {
 });
 //Devo mettere anche util per eliminare l'immagine quando non mi serve
 */
-/*
+
 app.use(
   '/graphql',
   graphqlHTTP({
@@ -108,7 +107,6 @@ app.use(
     }
   })
 );
-*/
 
 app.use('/uploads', express.static('uploads'));
 

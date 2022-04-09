@@ -17,7 +17,7 @@
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
 const bcrypt = require("bcrypt");
-const uploadFeature = require("@adminjs/upload");
+//const uploadFeature = require("@adminjs/upload");
 
 const { User, Article, Tag, Topic } = require("../models");
 const {
@@ -79,34 +79,34 @@ const adminJS = new AdminJS({
         parent: sidebarGroups.article,
         actions: articleActions,
         locale: {
-          language: 'en',
-          translations: {
+          default: {
             Article: {
               properties: {
-                public: 'Do you want to publish it?',
+                published: 'Do you want to publish it?',
               }
             }
           }
         },
       },
-      features: [
-        uploadFeature({
-          provider: { local: { bucket: "public" } },
-          multiple: true,
-          properties: {
-            file: "images.file",
-            filePath: "images.path",
-            filename: "images.filename",
-            filesToDelete: "images.toDelete",
-            key: "images.key",
-            mimeType: "images.mimeType",
-            bucket: "images.bucket",
-          },
-          validation: {
-            mimeType: ["image/png", "image/jpg"],
-          },
-        }),
-      ],
+    //questo è un'altro modo di gestire il sistema
+    //   features: [
+    //     uploadFeature({
+    //       provider: { local: { bucket: "public" } },
+    //       multiple: true,
+    //       properties: {
+    //         file: "images.file",
+    //         filePath: "images.path",
+    //         filename: "images.filename",
+    //         filesToDelete: "images.toDelete",
+    //         key: "images.key",
+    //         mimeType: "images.mimeType",
+    //         bucket: "images.bucket",
+    //       },
+    //       validation: {
+    //         mimeType: ["image/png", "image/jpg"],
+    //       },
+    //     }),
+    //   ],
     },
     {
       resource: Tag,

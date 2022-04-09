@@ -9,6 +9,8 @@ const after = async (response, request, context) => {
 
   if (record.isValid() && uploadFile) {
     const filePath = path.join('uploads', record.id().toString(), uploadFile.name);
+    // /g sta per global cioè cambia tutti gli elementi (replace all)
+    //filePath = filePath.replace(/\\/g,'/')
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
 
     await fs.promises.rename(uploadFile.path, filePath);

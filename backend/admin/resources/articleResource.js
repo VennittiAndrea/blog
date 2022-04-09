@@ -20,6 +20,7 @@ const articleResource = {
     components: {
       edit: AdminJS.bundle("../components/upload-file.edit.tsx"),
       list: AdminJS.bundle("../components/upload-file.list.tsx"),
+      show: AdminJS.bundle("../components/upload-file.show.tsx"),
     },
   },
   uploadImage: {
@@ -27,13 +28,17 @@ const articleResource = {
     components: {
       edit: AdminJS.bundle("../components/upload-image.edit.tsx"),
       list: AdminJS.bundle("../components/upload-image.list.tsx"),
+      show: AdminJS.bundle("../components/upload-image.show.tsx"),
     },
   },
-  sanitizedHtml: {isVisible: false,},
-  slug: {isVisible: false,},
   fileLocation: {isVisible: false,},
   imageLocation: {isVisible: false,},
-  ownerId: { isVisible: { edit: true, show: true, list: true, filter: true } },
+  sanitizedHtml: {isVisible: false,},
+  slug: {isVisible: false,},
+  readingTime: {isVisible:{ edit: false, show: true, list: true, filter: true }},
+  visuals: {isVisible:{ edit: false, show: true, list: true, filter: true }},
+  createdAt: {isVisible:{ edit: false, show: true, list: true, filter: true }},
+  updatedAt: {isVisible:{ edit: false, show: true, list: true, filter: true }},
 };
 
 module.exports = articleResource;

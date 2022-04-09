@@ -6,6 +6,9 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  nameAsEditor: {
+    type: String,
+  },
   email: {
     type: String,
     required: true
