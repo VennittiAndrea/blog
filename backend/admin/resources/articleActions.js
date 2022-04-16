@@ -15,13 +15,23 @@ const canEditArticles = ({ currentAdmin, record }) => {
   }
 
 const elementAction = { 
-  edit: { isAccessible: canEditArticles },
+  edit: { 
+    isAccessible: canEditArticles,
+    after: async (response, request, context) => {
+      //In context there are all the fields of the database
+      const {record} = context;
+      await record.update({ modified: `${true}` });
+      return response;
+    },
+  },
   delete: { isAccessible: canEditArticles },
   new: {
     before: async (request, context) => {
       return await articleBeforeHook(request, context);
     },
     after: async (response, request, context) => {
+      const {record} = context;
+      await record.update({ modified: `${true}` });
       return await articleAfterHook(response, request, context);
     }
   }

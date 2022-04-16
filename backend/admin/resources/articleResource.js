@@ -37,8 +37,12 @@ const articleResource = {
   slug: {isVisible: false,},
   readingTime: {isVisible:{ edit: false, show: true, list: true, filter: true }},
   visuals: {isVisible:{ edit: false, show: true, list: true, filter: true }},
+  modified: {isVisible: false,},
   createdAt: {isVisible:{ edit: false, show: true, list: true, filter: true }},
   updatedAt: {isVisible:{ edit: false, show: true, list: true, filter: true }},
+  popCached: {isVisible: { edit: false, show: true, list: true, filter: true }},
+  timeCached: {isVisible: false,},
+
 };
 
 module.exports = articleResource;

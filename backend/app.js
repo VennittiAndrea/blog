@@ -15,6 +15,9 @@ const graphqlResolver = require('./graphql/resolvers');
 //Required for admin page
 const {adminJS, router} = require('./admin');
 
+//Automatic update of the timeCache
+const cron = require("node-cron");
+const cacheUpdate = require("./cacheManagement")
 
 const app = express();
 
@@ -107,6 +110,10 @@ app.use(
     }
   })
 );
+
+cron.schedule('0 0 1 * * *', () => {
+  cacheUpdate();
+});
 
 app.use('/uploads', express.static('uploads'));
 

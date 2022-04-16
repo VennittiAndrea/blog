@@ -51,9 +51,6 @@ const articleSchema = new Schema(
     slug: {
       type: String,
     },
-    sanitizedHtml: {
-      type: String,
-    },
     published: {
       type: Boolean,
       required: true,
@@ -61,15 +58,27 @@ const articleSchema = new Schema(
     visuals: {
       type: Number,
     },
+    modified: {
+      type: Boolean,
+    },
+    popCached: {
+      type: Boolean,
+    },
+    timeCached: {
+      type: Date, 
+    }
   },
   { timestamps: true }
 );
 
 articleSchema.pre("validate", function (next) {
+  //Creation of slug for the article
   if (this.title) {
     this.slug = slugify(this.title, { lower: true, strict: true });
     console.log(this.slug)
   }
+  this.popCached = false;
+  this.timeCached = false;
   // if (this.fileLocation) {
   //   var zip = new AdmZip(this.fileLocation);
   //   var zipEntries = zip.getEntries();
@@ -85,6 +94,7 @@ articleSchema.pre("validate", function (next) {
   // }
   next();
 });
+
 
 
 

@@ -4,6 +4,7 @@ module.exports = buildSchema(`
 
     type ArticleData {
         title: String!
+        creator: String!
         slug: String!
         tag: String!
         topic: String!
